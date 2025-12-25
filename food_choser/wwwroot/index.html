@@ -8,23 +8,57 @@
 </head>
 <body>
     <div class="container">
-        <h1>🍽️ Matvelger</h1>
+        <h1>Matvelger</h1>
         
-        <section class="add-food">
+        <!-- Main page with buttons -->
+        <section class="main-section">
+            <button id="showFormBtn" class="primary-btn">Legg til rett</button>
+            <button id="chooseRandomBtn" class="primary-btn choose-btn"> Velg tilfeldig rett</button>
+            <button id="showStatsBtn" class="primary-btn stats-btn">Vis statistikk</button>
+        </section>
+
+        <!-- Random food selection (hidden by default) -->
+        <section class="random-selection" id="randomSection" style="display: none;">
+            <h2>Velg en rett</h2>
+            <div id="randomFoods" class="random-foods-grid"></div>
+            <button id="closeRandomBtn" class="cancel-btn">Lukk</button>
+        </section>
+
+        <!-- Statistics section (hidden by default) -->
+        <section class="stats-section" id="statsSection" style="display: none;">
+            <h2>Statistikk - Mest valgte retter</h2>
+            <div id="statsContent"></div>
+            <button id="closeStatsBtn" class="cancel-btn">Lukk</button>
+        </section>
+
+        <!-- Form section (hidden by default) -->
+        <section class="add-food" id="formSection" style="display: none;">
             <h2>Legg til ny rett</h2>
             <form id="foodForm">
-                <input type="text" id="foodName" placeholder="Rettens navn" required>
+                <label for="foodName">Rettens navn:</label>
+                <input type="text" id="foodName" placeholder="F.eks. Taco, Pizza, Curry..." required>
                 
                 <label for="kategori">Kategori:</label>
-                <select id="kategori" required></select>
+                <select id="kategori" required>
+                    <option value="">-- Velg kategori --</option>
+                </select>
                 
                 <label for="land">Land:</label>
-                <select id="land" required></select>
+                <select id="land" required>
+                    <option value="">-- Velg land --</option>
+                </select>
                 
-                <button type="submit">Legg til rett</button>
+                <label for="tid">Tid (minutter):</label>
+                <input type="number" id="tid" placeholder="F.eks. 30" min="1" required>
+                
+                <div class="button-group">
+                    <button type="submit" class="submit-btn">Lagre rett</button>
+                    <button type="button" id="cancelBtn" class="cancel-btn">Avbryt</button>
+                </div>
             </form>
         </section>
 
+        <!-- List of all dishes -->
         <section class="food-list">
             <h2>Alle retter</h2>
             <div id="foods"></div>

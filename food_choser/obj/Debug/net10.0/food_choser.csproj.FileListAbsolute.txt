@@ -3,7 +3,6 @@ C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\f
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\food_choser.runtimeconfig.json
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\food_choser.dll
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\food_choser.pdb
-C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\System.Data.SQLite.dll
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\food_choser.csproj.AssemblyReference.cache
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\food_choser.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\food_choser.AssemblyInfoInputs.cache
@@ -43,3 +42,19 @@ C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\r
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\food_choser.staticwebassets.runtime.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\bin\Debug\net10.0\food_choser.staticwebassets.endpoints.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\food_choser.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\rjimswa.dswa.cache.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\scopedcss\bundle\food_choser.styles.css
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\staticwebassets.build.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\staticwebassets.build.json.cache
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\staticwebassets.development.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\swae.build.ex.cache
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\compressed\70mq6f5n7r-{0}-me7f2s1n7o-me7f2s1n7o.gz
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\compressed\gl0trfx22i-{0}-u3v2wrf12m-u3v2wrf12m.gz
+C:\Users\odalo\Documents\skole\github\Prosjekter\food_choser\obj\Debug\net10.0\compressed\d9abfz2kzq-{0}-yttn00h3pv-yttn00h3pv.gz

@@ -24,9 +24,9 @@ InitializeDatabase(DbPath);
 
 var app = builder.Build();
 
-app.UseStaticFiles(); // Serve HTML, CSS, JS fra wwwroot
+app.UseDefaultFiles(); // Enables default file mapping (index.html)
+app.UseStaticFiles();  // Serve HTML, CSS, JS fra wwwroot
 
-// API endpoints
 // API endpoints
 app.MapGet("/api/kategorier", () => 
 {
@@ -45,6 +45,12 @@ app.MapGet("/api/land", () =>
 app.MapPost("/api/retter", (RettRequest request) => AddRett(request, DbPath));
 
 app.MapGet("/api/retter", () => GetRetter(DbPath));
+
+app.MapGet("/api/retter/random", () => GetRandomRetter(DbPath, 3));
+
+app.MapPost("/api/retter/{id}/velg", (int id) => VelgRett(id, DbPath));
+
+app.MapGet("/api/statistikk", () => GetStatistikk(DbPath));
 
 app.Run();
 
@@ -151,7 +157,7 @@ List<Rett> GetRetter(string dbPath)
     connection.Open();
     using var cmd = connection.CreateCommand();
     cmd.CommandText = @"
-        SELECT r.rett_id, r.navn, k.navn, l.navn, r.ganger_valgt 
+        SELECT r.rett_id, r.navn, k.navn, l.navn, r.ganger_valgt, r.tid 
         FROM retter r 
         LEFT JOIN kategorier k ON r.kategori_id = k.kategori_id
         LEFT JOIN land l ON r.land_id = l.land_id
@@ -165,7 +171,8 @@ List<Rett> GetRetter(string dbPath)
             Navn = reader.GetString(1),
             Kategori = reader.GetString(2),
             Land = reader.GetString(3),
-            GangerValgt = reader.GetInt32(4)
+            GangerValgt = reader.GetInt32(4),
+            Tid = reader.IsDBNull(5) ? null : reader.GetInt32(5)
         });
     }
     return retter;
@@ -177,13 +184,88 @@ void AddRett(RettRequest request, string dbPath)
     connection.Open();
     using var cmd = connection.CreateCommand();
     cmd.CommandText = @"
-        INSERT INTO retter (navn, kategori_id, land_id, ganger_valgt) 
-        VALUES (@navn, @kategori_id, @land_id, 0)
+        INSERT INTO retter (navn, kategori_id, land_id, tid, ganger_valgt) 
+        VALUES (@navn, @kategori_id, @land_id, @tid, 0)
     ";
     cmd.Parameters.AddWithValue("@navn", request.Navn);
     cmd.Parameters.AddWithValue("@kategori_id", request.KategoriId);
     cmd.Parameters.AddWithValue("@land_id", request.LandId);
+    cmd.Parameters.AddWithValue("@tid", request.Tid);
     cmd.ExecuteNonQuery();
+}
+
+List<Rett> GetRandomRetter(string dbPath, int count)
+{
+    var retter = new List<Rett>();
+    using var connection = new SqliteConnection($"Data Source={dbPath}");
+    connection.Open();
+    using var cmd = connection.CreateCommand();
+    cmd.CommandText = @"
+        SELECT r.rett_id, r.navn, k.navn, l.navn, r.ganger_valgt, r.tid 
+        FROM retter r 
+        LEFT JOIN kategorier k ON r.kategori_id = k.kategori_id
+        LEFT JOIN land l ON r.land_id = l.land_id
+        ORDER BY RANDOM()
+        LIMIT @count
+    ";
+    cmd.Parameters.AddWithValue("@count", count);
+    using var reader = cmd.ExecuteReader();
+    while (reader.Read())
+    {
+        retter.Add(new Rett 
+        { 
+            RettId = reader.GetInt32(0),
+            Navn = reader.GetString(1),
+            Kategori = reader.GetString(2),
+            Land = reader.GetString(3),
+            GangerValgt = reader.GetInt32(4),
+            Tid = reader.IsDBNull(5) ? null : reader.GetInt32(5)
+        });
+    }
+    return retter;
+}
+
+void VelgRett(int rettId, string dbPath)
+{
+    using var connection = new SqliteConnection($"Data Source={dbPath}");
+    connection.Open();
+    using var cmd = connection.CreateCommand();
+    cmd.CommandText = @"
+        UPDATE retter 
+        SET ganger_valgt = ganger_valgt + 1 
+        WHERE rett_id = @rett_id
+    ";
+    cmd.Parameters.AddWithValue("@rett_id", rettId);
+    cmd.ExecuteNonQuery();
+}
+
+List<Rett> GetStatistikk(string dbPath)
+{
+    var retter = new List<Rett>();
+    using var connection = new SqliteConnection($"Data Source={dbPath}");
+    connection.Open();
+    using var cmd = connection.CreateCommand();
+    cmd.CommandText = @"
+        SELECT r.rett_id, r.navn, k.navn, l.navn, r.ganger_valgt, r.tid 
+        FROM retter r 
+        LEFT JOIN kategorier k ON r.kategori_id = k.kategori_id
+        LEFT JOIN land l ON r.land_id = l.land_id
+        ORDER BY r.ganger_valgt DESC
+    ";
+    using var reader = cmd.ExecuteReader();
+    while (reader.Read())
+    {
+        retter.Add(new Rett 
+        { 
+            RettId = reader.GetInt32(0),
+            Navn = reader.GetString(1),
+            Kategori = reader.GetString(2),
+            Land = reader.GetString(3),
+            GangerValgt = reader.GetInt32(4),
+            Tid = reader.IsDBNull(5) ? null : reader.GetInt32(5)
+        });
+    }
+    return retter;
 }
 
 // Models
@@ -205,7 +287,8 @@ class Rett
     public string? Navn { get; set; } 
     public string? Kategori { get; set; } 
     public string? Land { get; set; } 
-    public int GangerValgt { get; set; } 
+    public int GangerValgt { get; set; }
+    public int? Tid { get; set; }
 }
 
-record RettRequest(string Navn, int KategoriId, int LandId);
+record RettRequest(string Navn, int KategoriId, int LandId, int Tid);

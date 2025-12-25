@@ -171,15 +171,6 @@
         "runtime": {
           "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
-      },
-      "System.Data.SQLite/2.0.2": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.1/System.Data.SQLite.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.1/System.Data.SQLite.dll": {}
-        }
       }
     }
   },
@@ -308,26 +299,11 @@
         "sqlitepclraw.provider.e_sqlite3.2.1.11.nupkg.sha512",
         "sqlitepclraw.provider.e_sqlite3.nuspec"
       ]
-    },
-    "System.Data.SQLite/2.0.2": {
-      "sha512": "yAwxkraZf1PazyLg1sqMAlh4KEtaa2L8zieLicd9oWBybrb3SoPph+WVIyUTFWwtTVhNX/jNsDew6tbB8bw2xQ==",
-      "type": "package",
-      "path": "system.data.sqlite/2.0.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net471/System.Data.SQLite.dll",
-        "lib/netstandard2.0/System.Data.SQLite.dll",
-        "lib/netstandard2.1/System.Data.SQLite.dll",
-        "system.data.sqlite.2.0.2.nupkg.sha512",
-        "system.data.sqlite.nuspec"
-      ]
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
-      "Microsoft.Data.Sqlite >= 10.0.1",
-      "System.Data.SQLite >= 2.0.2"
+      "Microsoft.Data.Sqlite >= 10.0.1"
     ]
   },
   "packageFolders": {
@@ -384,10 +360,6 @@
           "Microsoft.Data.Sqlite": {
             "target": "Package",
             "version": "[10.0.1, )"
-          },
-          "System.Data.SQLite": {
-            "target": "Package",
-            "version": "[2.0.2, )"
           }
         },
         "imports": [
