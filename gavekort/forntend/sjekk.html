@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sjekk saldo</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <main class="page">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand__eyebrow">Sjekk saldo</span>
+                <h1 class="brand__title">Finn saldo på gavekort</h1>
+                <p class="brand__subtitle">Skriv inn gavekortnummeret og hent saldo fra databasen.</p>
+            </div>
+            <a class="back-link" href="index.html">Tilbake til hovedsiden</a>
+        </header>
+
+        <section class="grid">
+            <div class="card card--wide stack">
+                <form id="check-form">
+                    <div class="form-group">
+                        <label for="gift-card-number">Gavekortnummer</label>
+                        <input type="number" id="gift-card-number" min="1" placeholder="Skriv inn gavekortnummer" required>
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit">Sjekk saldo</button>
+                    </div>
+                </form>
+
+                <p class="hint">Resultatet fra backend vises under skjemaet.</p>
+                <div id="check-result" class="result">Her vises saldoen når du søker opp et gavekort.</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/sjekk.js"></script>
+</body>
+</html>

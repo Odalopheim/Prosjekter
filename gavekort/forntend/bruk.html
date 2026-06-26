@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruk gavekort</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <main class="page">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand__eyebrow">Bruk gavekort</span>
+                <h1 class="brand__title">Trekk fra saldo</h1>
+                <p class="brand__subtitle">Registrer et beløp som skal brukes på gavekortet.</p>
+            </div>
+            <a class="back-link" href="index.html">Tilbake til hovedsiden</a>
+        </header>
+
+        <section class="grid">
+            <div class="card card--wide stack">
+                <form id="use-form">
+                    <div class="form-group">
+                        <label for="gift-card-number">Gavekortnummer</label>
+                        <input type="number" id="gift-card-number" min="1" placeholder="Skriv inn gavekortnummer" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Beløp å bruke</label>
+                        <input type="number" id="amount" min="1" placeholder="Skriv inn beløp" required>
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit">Bruk gavekort</button>
+                    </div>
+                </form>
+
+                <p class="hint">Når backend-ruten er klar, kan dette skjemaet oppdatere saldo direkte.</p>
+                <div id="use-result" class="result">Her vises bekreftelsen etter bruk.</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/bruk.js"></script>
+</body>
+</html>
