@@ -1,0 +1,43 @@
+# Visual Studio / .NET gitignore
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# VS Code workspace
+.vscode/
+
+# Visual Studio cache/options
+.vs/
+
+# Build results
+bin/
+obj/
+Debug/
+Release/
+
+# Rider project files
+.idea/
+
+# NuGet
+*.nupkg
+packages/
+
+# Dotnet publish
+publish/
+
+# Test results
+TestResults/
+
+# IIS Express
+/.vs/*/applicationhost.config
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

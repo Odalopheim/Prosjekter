@@ -17,7 +17,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 // Database path
-const string DbPath = "food.db";
+var DbPath = Path.Combine(AppContext.BaseDirectory, "food.db");
 
 // Initialize database
 InitializeDatabase(DbPath);
@@ -35,12 +35,16 @@ app.MapGet("/api/kategorier", () =>
     return result;
 });
 
+app.MapPost("/api/kategorier", (NavnRequest request) => AddKategori(request, DbPath));
+
 app.MapGet("/api/land", () => 
 {
     var result = GetLand(DbPath);
     Console.WriteLine($"Returnerer {result.Count} land");
     return result;
 });
+
+app.MapPost("/api/land", (NavnRequest request) => AddLand(request, DbPath));
 
 app.MapPost("/api/retter", (RettRequest request) => AddRett(request, DbPath));
 
@@ -63,14 +67,14 @@ void InitializeDatabase(string dbPath)
     Execute(connection, @"
         CREATE TABLE IF NOT EXISTS kategorier (
             kategori_id INTEGER PRIMARY KEY,
-            navn TEXT NOT NULL
+            navn TEXT NOT NULL COLLATE NOCASE UNIQUE
         );
     ");
 
     Execute(connection, @"
         CREATE TABLE IF NOT EXISTS land (
             land_id INTEGER PRIMARY KEY,
-            navn TEXT NOT NULL
+            navn TEXT NOT NULL COLLATE NOCASE UNIQUE
         );
     ");
 
@@ -131,6 +135,41 @@ List<Kategori> GetKategorier(string dbPath)
     return kategorier;
 }
 
+object AddKategori(NavnRequest request, string dbPath)
+{
+    var navn = request.Navn?.Trim();
+    if (string.IsNullOrWhiteSpace(navn))
+    {
+        return Results.BadRequest(new { error = "Navn på kategori mangler" });
+    }
+
+    using var connection = new SqliteConnection($"Data Source={dbPath}");
+    connection.Open();
+
+    using (var insert = connection.CreateCommand())
+    {
+        insert.CommandText = "INSERT OR IGNORE INTO kategorier (navn) VALUES (@navn)";
+        insert.Parameters.AddWithValue("@navn", navn);
+        insert.ExecuteNonQuery();
+    }
+
+    using var select = connection.CreateCommand();
+    select.CommandText = "SELECT kategori_id, navn FROM kategorier WHERE navn = @navn LIMIT 1";
+    select.Parameters.AddWithValue("@navn", navn);
+
+    using var reader = select.ExecuteReader();
+    if (!reader.Read())
+    {
+        return Results.Problem("Kunne ikke lagre kategori");
+    }
+
+    return Results.Ok(new Kategori
+    {
+        KategoriId = reader.GetInt32(0),
+        Navn = reader.GetString(1)
+    });
+}
+
 List<Land> GetLand(string dbPath)
 {
     var land = new List<Land>();
@@ -148,6 +187,41 @@ List<Land> GetLand(string dbPath)
         });
     }
     return land;
+}
+
+object AddLand(NavnRequest request, string dbPath)
+{
+    var navn = request.Navn?.Trim();
+    if (string.IsNullOrWhiteSpace(navn))
+    {
+        return Results.BadRequest(new { error = "Navn på land mangler" });
+    }
+
+    using var connection = new SqliteConnection($"Data Source={dbPath}");
+    connection.Open();
+
+    using (var insert = connection.CreateCommand())
+    {
+        insert.CommandText = "INSERT OR IGNORE INTO land (navn) VALUES (@navn)";
+        insert.Parameters.AddWithValue("@navn", navn);
+        insert.ExecuteNonQuery();
+    }
+
+    using var select = connection.CreateCommand();
+    select.CommandText = "SELECT land_id, navn FROM land WHERE navn = @navn LIMIT 1";
+    select.Parameters.AddWithValue("@navn", navn);
+
+    using var reader = select.ExecuteReader();
+    if (!reader.Read())
+    {
+        return Results.Problem("Kunne ikke lagre land");
+    }
+
+    return Results.Ok(new Land
+    {
+        LandId = reader.GetInt32(0),
+        Navn = reader.GetString(1)
+    });
 }
 
 List<Rett> GetRetter(string dbPath)
@@ -178,7 +252,7 @@ List<Rett> GetRetter(string dbPath)
     return retter;
 }
 
-void AddRett(RettRequest request, string dbPath)
+object AddRett(RettRequest request, string dbPath)
 {
     using var connection = new SqliteConnection($"Data Source={dbPath}");
     connection.Open();
@@ -192,6 +266,8 @@ void AddRett(RettRequest request, string dbPath)
     cmd.Parameters.AddWithValue("@land_id", request.LandId);
     cmd.Parameters.AddWithValue("@tid", request.Tid);
     cmd.ExecuteNonQuery();
+
+    return Results.Ok(new { message = "Rett lagret i databasen." });
 }
 
 List<Rett> GetRandomRetter(string dbPath, int count)
@@ -292,3 +368,4 @@ class Rett
 }
 
 record RettRequest(string Navn, int KategoriId, int LandId, int Tid);
+record NavnRequest(string Navn);

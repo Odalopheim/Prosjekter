@@ -258,6 +258,64 @@ h2 {
     text-transform: uppercase;
 }
 
+.inline-create {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 18px 0;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.inline-create > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.secondary-btn {
+    padding: 10px 16px;
+    background: #e9ecef;
+    color: #333;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.secondary-btn:hover {
+    background: #dee2e6;
+}
+
+.inline-create {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 18px 0;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.inline-create > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.secondary-btn {
+    padding: 10px 16px;
+    background: #e9ecef;
+    color: #333;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.secondary-btn:hover {
+    background: #dee2e6;
+}
+
 /* ==================== FORM SECTION ==================== */
 .add-food {
     margin-bottom: 30px;

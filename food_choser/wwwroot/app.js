@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadKategorier();
     loadLand();
     loadRetter();
+
+    document.getElementById('addKategoriBtn').addEventListener('click', addKategori);
+    document.getElementById('addLandBtn').addEventListener('click', addLand);
     
     // Show/hide form
     document.getElementById('showFormBtn').addEventListener('click', () => {
@@ -60,6 +63,7 @@ async function loadKategorier() {
         const response = await fetch('/api/kategorier');
         const kategorier = await response.json();
         const select = document.getElementById('kategori');
+        select.innerHTML = '<option value="">-- Velg kategori --</option>';
         kategorier.forEach(k => {
             const option = document.createElement('option');
             option.value = k.kategoriId;
@@ -77,6 +81,7 @@ async function loadLand() {
         const response = await fetch('/api/land');
         const lands = await response.json();
         const select = document.getElementById('land');
+        select.innerHTML = '<option value="">-- Velg land --</option>';
         lands.forEach(l => {
             const option = document.createElement('option');
             option.value = l.landId;
@@ -85,6 +90,68 @@ async function loadLand() {
         });
     } catch (error) {
         console.error('Feil ved innlasting av land:', error);
+    }
+}
+
+async function addKategori() {
+    const input = document.getElementById('newKategori');
+    const navn = input.value.trim();
+
+    if (!navn) {
+        alert('Skriv inn et kategorinavn først.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/kategorier', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ navn })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.error || 'Kunne ikke lagre kategori');
+            return;
+        }
+
+        input.value = '';
+        await loadKategorier();
+        document.getElementById('kategori').value = data.kategoriId;
+    } catch (error) {
+        alert('Nettverksfeil - kunne ikke lagre kategori');
+    }
+}
+
+async function addLand() {
+    const input = document.getElementById('newLand');
+    const navn = input.value.trim();
+
+    if (!navn) {
+        alert('Skriv inn et landsnavn først.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/land', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ navn })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.error || 'Kunne ikke lagre land');
+            return;
+        }
+
+        input.value = '';
+        await loadLand();
+        document.getElementById('land').value = data.landId;
+    } catch (error) {
+        alert('Nettverksfeil - kunne ikke lagre land');
     }
 }
 
