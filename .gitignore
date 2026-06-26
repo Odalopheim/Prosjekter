@@ -1,0 +1,33 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+
+# Editors / IDEs
+.vscode/
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.rsuser
+*.sln.docstates
+
+# .NET
+bin/
+obj/
+Debug/
+Release/
+publish/
+TestResults/
+*.nupkg
+packages/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
